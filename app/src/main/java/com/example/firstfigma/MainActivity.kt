@@ -167,6 +167,7 @@ class MainActivity : ComponentActivity() {
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily(Font(R.font.cairobold)),
                     color = colorResource(R.color.assouad1)
+
                 )
             }
 
