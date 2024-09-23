@@ -130,7 +130,7 @@ class MainActivity : ComponentActivity() {
     fun Buttons(modifier: Modifier=Modifier,firstText: String, color: Color) {
         Box(modifier=modifier) {
             Card(
-                modifier = Modifier.offset(x = -5.dp,y=2.dp)
+                modifier = Modifier.offset(x = -2.dp,y=2.dp)
                     .fillMaxWidth()
                     .height(60.dp)
                     .padding(vertical = 5.dp, horizontal = 30.dp),
