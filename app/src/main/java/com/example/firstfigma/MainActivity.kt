@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -103,12 +105,12 @@ class MainActivity : ComponentActivity() {
             modifier = modifier.fillMaxWidth()
         ) {
             Image(
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(35.dp),
+                    .padding(vertical = 35.dp),
                 painter = painterResource(R.drawable.potrace8_44_05_am_3),
                 contentDescription = null,
-                contentScale = ContentScale.Crop
             )
             Text(
                 text = text,
@@ -128,7 +130,7 @@ class MainActivity : ComponentActivity() {
     fun Buttons(modifier: Modifier=Modifier,firstText: String, color: Color) {
         Box(modifier=modifier) {
             Card(
-                modifier = Modifier.padding(5.dp)
+                modifier = Modifier.offset(x = -5.dp,y=2.dp)
                     .fillMaxWidth()
                     .height(60.dp)
                     .padding(vertical = 5.dp, horizontal = 30.dp),
@@ -141,7 +143,7 @@ class MainActivity : ComponentActivity() {
                 )
             ) { }
             Card(
-                modifier = Modifier
+                modifier = Modifier.clickable {  }
                     .fillMaxWidth()
                     .height(60.dp)
                     .padding(vertical = 5.dp, horizontal = 30.dp),
