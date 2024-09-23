@@ -27,21 +27,28 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.firstfigma.ui.theme.FirstFigmaTheme
@@ -51,153 +58,153 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            FirstFigmaTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Jalsa(
-                        modifier = Modifier.padding(innerPadding)
+            CompositionLocalProvider(
+                LocalLayoutDirection provides LayoutDirection.Rtl
+            )
+            {
+                FirstFigmaTheme {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        Jalsa(
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
+                }
+
+            }
+        }
+    }
+
+    @Composable
+    fun Greeting(name: String, modifier: Modifier = Modifier) {
+        Text(
+            text = "Hello $name!",
+            modifier = modifier
+        )
+    }
+
+    @Preview(showBackground = true)
+    @Composable
+    fun Jalsa(modifier: Modifier = Modifier) {
+        FirstFigmaTheme {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                MainView(stringResource(R.string.MainSentence))
+                Spacer(modifier = Modifier.height(150.dp))
+                Column(
+                    modifier = Modifier.fillMaxHeight(0.5f),
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    Buttons(
+                        modifier = Modifier.shadow(20.dp),
+                        firstText = "أنشئ جلسة جديد",
+                        color = colorResource(R.color.Asfar)
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Buttons(
+                        firstText = "انضم إلى جلسة", color = Color.White
                     )
                 }
             }
         }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun Jalsa(modifier: Modifier = Modifier) {
-    FirstFigmaTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            MainView(stringResource(R.string.MainSentence))
-            Column(
-                modifier = Modifier.fillMaxHeight(0.5f),
-                verticalArrangement = Arrangement.Bottom
-            ) {
-                Buttons(
-                    modifier = Modifier.shadow(20.dp),
-                    firstText = "أنشئ جلسة جديد",
-                    color = ButtonColors(
-                        contentColor = Color.Black,
-                        containerColor = Color.Yellow,
-                        disabledContainerColor = Color.Blue,
-                        disabledContentColor = Color.Gray
-                    )
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Buttons(
-                    firstText = "انضم إلى جلسة", color = ButtonColors(
-                        contentColor = Color.Black,
-                        containerColor = Color.White,
-                        disabledContainerColor = Color.Blue,
-                        disabledContentColor = Color.Gray
-                    )
-                )
-            }
-        }
     }
 
-}
-
-@Composable
-fun MainView(
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxWidth()
+    @Composable
+    fun MainView(
+        text: String,
+        modifier: Modifier = Modifier
     ) {
-        Image(
-            modifier = Modifier.fillMaxWidth(),
-            painter = painterResource(R.drawable.frame_823),
-            contentDescription = null,
-            contentScale = ContentScale.FillWidth
-        )
-        Image(
-            modifier = Modifier.fillMaxWidth(),
-            painter = painterResource(R.drawable.potrace8_44_05_am_3),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        HorizontalDivider(
-            thickness = 4.dp,
-            color = Color.Red
-        )
-        Card(
-
+        Column(
+            modifier = modifier.fillMaxWidth()
         ) {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(35.dp),
+                painter = painterResource(R.drawable.potrace8_44_05_am_3),
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
             Text(
                 text = text,
-                modifier = Modifier.padding(50.dp),
+                modifier = Modifier.padding(horizontal = 50.dp),
                 textAlign = TextAlign.Center,
-                fontSize = 25.sp
+                fontSize = 14.sp,
+                lineHeight = 26.24.sp,
+                fontFamily = FontFamily(Font(R.font.cairomedium)),
+                color = colorResource(R.color.assouad1)
             )
+
         }
 
     }
 
-}
+    @Composable
+    fun Buttons(modifier: Modifier = Modifier, firstText: String, color: Color) {
+        Box {
+            Card(
+                modifier = Modifier.padding(5.dp)
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .padding(vertical = 5.dp, horizontal = 30.dp),
+                border = BorderStroke(2.dp, color = Color.Black),
+                colors = CardColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Red,
+                    disabledContentColor = Color.Red
+                )
+            ) { }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .padding(vertical = 5.dp, horizontal = 30.dp),
+                border = BorderStroke(2.dp, color = Color.Black),
+                colors = CardColors(
+                    containerColor = color,
+                    contentColor = Color.White,
+                    disabledContainerColor = Color.Red,
+                    disabledContentColor = Color.Red
+                )
 
-@Composable
-fun Buttons(modifier: Modifier = Modifier, firstText: String, color: ButtonColors) {
-    Button(modifier = Modifier.fillMaxWidth(),
-        colors = color,
-        border = BorderStroke(1.dp, Color.Black),
-        shape = RoundedCornerShape(100),
 
-        onClick = { /*TODO*/ }
+            ) {
+                Text(
+                    text = firstText,
+                    fontSize = 16.sp,
+                    lineHeight = 29.98.sp,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 7.dp),
+                    textAlign = TextAlign.Center,
+                    fontFamily = FontFamily(Font(R.font.cairobold)),
+                    color = colorResource(R.color.assouad1)
+                )
+            }
+
+        }
+    }
+
+    @Composable
+    fun MyCustomItem(
+        modifier: Modifier = Modifier
     ) {
-        Text(
-            text = firstText,
-            fontSize = 25.sp
-        )
+        Row(
+            modifier = modifier
+        ) {
+            Text("Hi")
+
+            Spacer(
+                Modifier.weight(1f)
+            )
+
+            Text("end")
+        }
     }
 
-
-}
-
-@Composable
-fun MyCustomItem(
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-    ) {
-        Text("Hi")
-        
-        Spacer(
-            Modifier.weight(1f)
-        )
-
-        Text("end")
-    }
-}
-
-@Composable
-@Preview
-fun ddd() {
-    Column {
-        MyCustomItem(
-            modifier = Modifier
-                .width(100.dp)
-                .background(Color.Red)
-        )
-        MyCustomItem(
-            modifier = Modifier
-                .width(200.dp)
-        )
-        MyCustomItem()
-        MyCustomItem()
-    }
 }
